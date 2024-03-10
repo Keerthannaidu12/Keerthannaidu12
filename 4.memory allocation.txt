@@ -1,0 +1,57 @@
+#include<stdio.h>
+
+void main()
+{
+    int n, m, i, j;
+    
+    //Taking input for number of partitions
+    printf("Enter the number of partitions: ");
+    scanf("%d", &n);
+    
+    //Taking input for number of processes
+    printf("Enter the number of processes: ");
+    scanf("%d", &m);
+    
+    int partition[n], process[m];
+    
+    //Initializing partitions with their sizes
+    printf("Enter the sizes of partitions:\n");
+    for(i=0;i<n;i++)
+        scanf("%d", &partition[i]);
+    
+    //Initializing processes with their sizes
+    printf("Enter the sizes of processes:\n");
+    for(i=0;i<m;i++)
+        scanf("%d", &process[i]);
+    
+    //Initializing allocation table
+    int allocation[m];
+    for(i=0;i<m;i++)
+        allocation[i] = -1; //Initially all processes are not allocated
+  
+    //Memory Allocation using First Fit
+    for(i=0;i<m;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            if(partition[j] >= process[i])
+            {
+                allocation[i] = j;
+                partition[j] -= process[i];
+                break;
+            }
+        }
+    }
+    
+    //Printing allocation table
+    printf("\nAllocation Table:\n");
+    printf("Process No.\tProcess Size\tAllocated Partition No.\n");
+    for(i=0;i<m;i++)
+    {
+        printf("%d\t\t%d\t\t", i+1, process[i]);
+        if(allocation[i] != -1)
+            printf("%d\n", allocation[i]+1);
+        else
+            printf("Not Allocated\n");
+    }
+}
