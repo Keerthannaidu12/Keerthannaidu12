@@ -1,0 +1,65 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<stdbool.h>
+#include<ctype.h>
+#define MAX 100
+
+char stack[MAX];
+int top = -1;
+
+void push(char item)
+{
+    if(top == MAX-1)
+    {
+        printf("Stack Overflow! \n");
+        return;
+    }
+    stack[++top] = item;
+}
+
+char pop()
+{
+    if(top == -1)
+    {
+        printf("Stack Underflow \n");
+        return '\0';
+    }
+    return stack[top--];
+}
+
+bool isPalindrome(const char* str)
+{
+    int len = strlen(str);
+    int mid = len/2;
+    for(int i=0;i<mid;i++)
+    {
+        push(str[i]);
+    }
+    int start = (len % 2 == 0) ? mid : mid + 1;
+    for(int i=start;i<len;i++)
+    {
+        char ch = pop();
+        if(ch != str[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main()
+{
+    char input[MAX];
+    printf("Enter a String: ");
+    scanf("%s", input);
+    if(isPalindrome(strlwr(input)))
+    {
+        printf("The string is a palindrome \n");
+    }
+    else
+    {
+        printf("The string is not a palindrome \n");
+    }
+    return 0;
+}
